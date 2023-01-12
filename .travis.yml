@@ -4,8 +4,8 @@ branches:
 language: java
 os: linux
 jdk: openjdk18
-
-script: true
+git:
+  quiet: true
 
 jobs:
   include:
@@ -14,3 +14,16 @@ jobs:
     - arch: arm64-graviton2
       group: edge
       virt: vm
+
+before_install:
+    - git clone https://github.com/UnterrainerInformatik/Travis-Scripts.git travis
+    - source travis/functions.Java.sh
+    - tr_setProjectSubdir Java
+    - source $TRAVIS/before_install.sh
+install:
+    - source $TRAVIS/install.sh
+before_script:
+    - source $TRAVIS/before_script.sh
+script:
+    - source $TRAVIS/script.sh
+    - source $TRAVIS/before_deploy.sh
